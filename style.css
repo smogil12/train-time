@@ -1,0 +1,16 @@
+.my-col {
+    background-color: lightcoral;
+    display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+        
+}
+
+.mb-4 {
+    margin-top: 20px;
+}
+
+#add-train-btn {
+    background-color: lightcoral;
+}
