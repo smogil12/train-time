@@ -28,27 +28,44 @@ $(document).ready(function() {
       trainTime: parseInt(trainTime),
       trainFrequency: parseInt(trainFrequency)
     });
+
+    $("#train-name-input").val("");
+    $("#destination-input").val("");
+    $("#train-time-input").val("");
+    $("#frequency-input").val("");
   });
-});
 
-db.collection("trains").onSnapshot(function(collectionSnap) {
-  console.log("[DEBUG] train was added to firebase");
-  var trainRows = collectionSnap.docs.forEach(function(doc) {
-    var trainData = doc.data();
-    console.log(trainData);
-    var trainTable = trainData.trainName;
-    var tableDesintation = trainData.destination;
-    var tableFrequency = trainData.trainFrequency;
-    console.log(trainTable);
-    console.log(tableDesintation);
-    // create row using train data
-    // append that row to the train table
+  db.collection("trains").onSnapshot(function(collectionSnap) {
+    console.log("[DEBUG] train was added to firebase");
+    var trainRows = collectionSnap.docs.forEach(function(doc) {
+      var trainData = doc.data();
+      console.log(trainData);
+      var trainTable = trainData.trainName;
+      var tableDesintation = trainData.destination;
+      var tableFrequency = trainData.trainFrequency;
+      var tableTime = trainData.trainTime;
+      var trainTimeConvert = moment(tableTime, "HH:mm").subtract(1, "years");
+      console.log(trainTable);
+      console.log(tableDesintation);
+      console.log("trainTimeConvert", trainTimeConvert);
+      var currentTime = moment();
+      var diffTime = moment().diff(trainTimeConvert, "minutes");
+      var remainder = diffTime % tableFrequency;
+      var timeRemain = tableFrequency - remainder;
+      var newTrainTime = moment().add(timeRemain, "minutes");
+      var newTrainTimeFormat = moment(newTrainTime).format("HH:mm");
 
-    var newRow = $("<tr>").append(
-      $("<td>").text(trainTable),
-      $("<td>").text(tableDesintation),
-      $("<td>").text(tableFrequency)
-    );
-    $("#train-table > tbody").append(newRow);
+      // create row using train data
+      // append that row to the train table
+
+      var newRow = $("<tr>").append(
+        $("<td>").text(trainTable),
+        $("<td>").text(tableDesintation),
+        $("<td>").text(tableFrequency),
+        $("<td>").text(newTrainTime),
+        $("<td>").text(newTrainTimeFormat)
+      );
+      $("#train-table > tbody").append(newRow);
+    });
   });
 });
