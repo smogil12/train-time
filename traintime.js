@@ -60,7 +60,7 @@ $(document).ready(function() {
         $("<td>").text(tableDesintation),
         $("<td>").text(tableFrequency),
         $("<td>").text(newTrainTime),
-        $("<td>").text(newTrainTimeFormat)
+        $("<td>").text(timeRemain)
       );
       $("#train-table > tbody").append(newRow);
     });
