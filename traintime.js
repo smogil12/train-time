@@ -55,9 +55,6 @@ $(document).ready(function() {
       var newTrainTime = moment().add(timeRemain, "minutes");
       var newTrainTimeFormat = moment(newTrainTime).format("HH:mm");
 
-      // create row using train data
-      // append that row to the train table
-
       var newRow = $("<tr>").append(
         $("<td>").text(trainTable),
         $("<td>").text(tableDesintation),
