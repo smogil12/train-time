@@ -36,6 +36,7 @@ $(document).ready(function() {
   });
 
   db.collection("trains").onSnapshot(function(collectionSnap) {
+    $("#train-table > tbody").empty();
     console.log("[DEBUG] train was added to firebase");
     var trainRows = collectionSnap.docs.forEach(function(doc) {
       var trainData = doc.data();
